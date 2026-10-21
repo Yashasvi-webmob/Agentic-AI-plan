@@ -1,0 +1,23 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python virtualenvs and caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Build output (once a day becomes an installable package)
+*.egg-info/
+dist/
+build/
+
+# Node (Day 7 proxy and any other Node builds)
+node_modules/
+
+# OS / editor noise
+.DS_Store

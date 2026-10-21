@@ -1,0 +1,54 @@
+{"ts": "2026-10-21T10:00:04Z", "level": "info", "path": "/api/users", "status": 200, "ms": 134}
+{"ts": "2026-10-21T10:00:09Z", "level": "info", "path": "/api/cart", "status": 304, "ms": 299}
+{"ts": "2026-10-21T10:00:12Z", "level": "info", "path": "/api/products", "status": 200, "ms": 67}
+{"ts": "2026-10-21T10:00:19Z", "level": "info", "path": "/api/users", "status": 201, "ms": 307}
+{"ts": "2026-10-21T10:00:26Z", "level": "warn", "path": "/api/cart", "status": 400, "ms": 234}
+{"ts": "2026-10-21T10:00:34Z", "level": "info", "path": "/api/orders", "status": 200, "ms": 23}
+{"ts": "2026-10-21T10:00:40Z", "level": "info", "path": "/api/auth/login", "status": 200, "ms": 99}
+{"ts": "2026-10-21T10:00:47Z", "level": "info", "path": "/health", "status": 200, "ms": 4}
+{"ts": "2026-10-21T10:01:00Z", "level": "warn", "path": "/api/users", "status": 404, "ms": 329}
+{"ts": "2026-10-21T10:01:09Z", "level": "warn", "path": "/api/cart", "status": 400, "ms": 294}
+{"ts": "2026-10-21T10:01:13Z", "level": "info", "path": "/health", "status": 200, "ms": 11}
+{"ts": "2026-10-21T10:01:23Z", "level": "info", "path": "/api/cart", "status": 201, "ms": 205}
+not json at all
+{"ts": "2026-10-21T10:01:42Z", "level": "info", "path": "/api/users", "status": 200, "ms": 358}
+{"ts": "2026-10-21T10:01:50Z", "level": "error", "path": "/api/cart", "status": 503, "ms": 1213}
+{"ts": "2026-10-21T10:02:03Z", "level": "info", "path": "/api/orders", "status": 304, "ms": 206}
+{"ts": "2026-10-21T10:02:09Z", "level": "info", "path": "/api/orders", "status": 200, "ms": 156}
+{"ts": "2026-10-21T10:02:12Z", "level": "info", "path": "/api/auth/login", "status": 200, "ms": 393}
+{"ts": "2026-10-21T10:02:20Z", "level": "info", "path": "/api/users", "status": 200, "ms": 347}
+{"ts": "2026-10-21T10:02:38Z", "level": "info", "path": "/api/users", "status": 200, "ms": 48}
+{"ts": "2026-10-21T10:02:46Z", "level": "warn", "path": "/api/cart", "status": 401, "ms": 225}
+{"ts": "2026-10-21T10:02:55Z", "level": "error", "path": "/api/users", "status": 500, "ms": 2088}
+{"ts": "2026-10-21T10:03:02Z", "level": "info", "path": "/api/auth/login", "status": 200, "ms": 349}
+{"ts": "2026-10-21T10:03:17Z", "level": "info", "path": "/api/users", "status": 200, "ms": 307}
+{"ts": "2026-10-21T10:03:35Z", "level": "info", "path": "/api/orders", "status": 201, "ms": 318}
+{"ts": "2026-10-21T10:03:48Z", "level": "error", "path": "/api/orders", "status": 503, "ms": 2887}
+{"ts": "2026-10-21T10:04:04Z", "level": "info", "path": "/api/users", "status": 200, "ms": 76}
+{"ts": "2026-10-21T10:05:00Z", "level": "info", "path": "/api/users"
+{"ts": "2026-10-21T10:04:09Z", "level": "warn", "path": "/api/auth/login", "status": 401, "ms": 236}
+{"ts": "2026-10-21T10:04:29Z", "level": "info", "path": "/api/users", "status": 200, "ms": 259}
+{"ts": "2026-10-21T10:04:46Z", "level": "info", "path": "/api/orders", "status": 201, "ms": 25}
+{"ts": "2026-10-21T10:04:50Z", "level": "info", "path": "/api/auth/login", "status": 200, "ms": 156}
+{"ts": "2026-10-21T10:05:01Z", "level": "info", "path": "/api/users", "status": 200, "ms": 252}
+
+{"ts": "2026-10-21T10:05:02Z", "level": "warn", "path": "/health", "status": 404, "ms": 7}
+{"ts": "2026-10-21T10:05:19Z", "level": "info", "path": "/api/cart", "status": 200, "ms": 74}
+{"ts": "2026-10-21T10:05:29Z", "level": "info", "path": "/api/cart", "status": 200, "ms": 121}
+{"ts": "2026-10-21T10:05:34Z", "level": "info", "path": "/api/orders", "status": 200, "ms": 291}
+{"ts": "2026-10-21T10:05:35Z", "level": "info", "path": "/api/products", "status": 200, "ms": 77}
+{"ts": "2026-10-21T10:05:47Z", "level": "warn", "path": "/health", "status": 404, "ms": 7}
+{"ts": "2026-10-21T10:05:55Z", "level": "warn", "path": "/api/users", "status": 404, "ms": 60}
+{"ts": "2026-10-21T10:09:00Z", "level": "info", "path": "/api/cart", "status": 200}
+{"ts": "2026-10-21T10:05:58Z", "level": "warn", "path": "/api/cart", "status": 404, "ms": 292}
+{"ts": "2026-10-21T10:06:03Z", "level": "info", "path": "/api/users", "status": 200, "ms": 301}
+{"ts": "2026-10-21T10:06:09Z", "level": "warn", "path": "/api/orders", "status": 404, "ms": 236}
+{"ts": "2026-10-21T10:06:16Z", "level": "warn", "path": "/health", "status": 400, "ms": 14}
+{"ts": "2026-10-21T10:06:23Z", "level": "info", "path": "/api/cart", "status": 200, "ms": 363}
+{"ts": "2026-10-21T10:06:35Z", "level": "info", "path": "/api/orders", "status": 200, "ms": 81}
+{"ts": "2026-10-21T10:06:43Z", "level": "info", "path": "/api/users", "status": 200, "ms": 321}
+{"ts": "2026-10-21T10:07:01Z", "level": "info", "path": "/api/users", "status": 200, "ms": 56}
+{"ts": "2026-10-21T10:07:03Z", "level": "error", "path": "/api/users", "status": 500, "ms": 1090}
+{"ts": "2026-10-21T10:07:20Z", "level": "info", "path": "/api/users", "status": 304, "ms": 129}
+{"ts": "2026-10-21T10:07:38Z", "level": "error", "path": "/api/users", "status": 500, "ms": 2736}
+{"ts": "2026-10-21T10:07:46Z", "level": "warn", "path": "/api/cart", "status": 401, "ms": 117}
