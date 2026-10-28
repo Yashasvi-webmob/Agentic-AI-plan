@@ -1,0 +1,24 @@
+Response:
+- FIIs citing easy liquidity and availability driving exits.  
+- Retail inflows allow FIIs to sell without crashing market.  
+- Market not crashing because buyers absorb sales.  
+- FIIs not desperate; sell due to comfortable exit environment.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=496, prompt_tokens=1515, total_tokens=2011, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=438, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.58131296, prompt_time=0.08303835, completion_time=0.549934627, total_time=0.632972977)
+Response:
+- FIIs selling due to ease of liquidity and availability.  
+- Retail inflows absorb selling, preventing market crash.  
+- Promoters also sell, reducing ownership.  
+- High retail participation fuels continued FII exits.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=604, prompt_tokens=1515, total_tokens=2119, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=550, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.39168312, prompt_time=0.090169061, completion_time=0.730962486, total_time=0.821131547)
+Response:
+- FIIs cited "ease of liquidity, ease of availability" as reason for exit.  
+- Retail inflows into funds and NRI inflows offset sell pressure.  
+- Large‑cap Nifty 50 shareholding hit 14‑year low of 21.1%.  
+- Promoters also liquidated positions, reflecting lower valuation expectations.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=579, prompt_tokens=1515, total_tokens=2094, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=499, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.31765713, prompt_time=0.088272267, completion_time=0.634019899, total_time=0.722292166)
+For temp: 0.7- {'temp': 0.7, 'completion_tokens': 496, 'reasoning_tokens': 438}
+For temp: 0- {'temp': 0, 'completion_tokens': 604, 'reasoning_tokens': 550}
+For temp: 1.5- {'temp': 1.5, 'completion_tokens': 579, 'reasoning_tokens': 499}

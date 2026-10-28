@@ -1,0 +1,8 @@
+Summarize the article inside the <article> tags. 
+What is the reason that the FIIs have been consistently selling shares in indian markets over the last 7 months? Answer based on the Summarized text.
+Answer in exactly 4 bullet points, each bullet not more than 15 words. 
+Complete Grammatically correct sentences not necessary can shorten to save tokens.
+
+<article>
+{{ARTICLE}}
+</article>

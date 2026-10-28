@@ -1,0 +1,24 @@
+Response:
+content - FIIs cite ease of liquidity and availability as key exit drivers.  
+- Retail inflows into equity funds absorb FII sell‑pressure.  
+- Large‑cap ownership fell to a 14‑year low, prompting FII divestments.  
+- Promoter sales further enable market absorption of FII outflows.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=726, prompt_tokens=1515, total_tokens=2241, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=651, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.211217669, prompt_time=0.085922621, completion_time=0.780897635, total_time=0.866820256)
+Response:
+content - FIIs selling due to ease of liquidity and availability.  
+- Retail inflows absorb selling, preventing market crash.  
+- Promoters also sell, reducing ownership.  
+- High retail participation fuels continued FII exits.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=601, prompt_tokens=1515, total_tokens=2116, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=547, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.316776363, prompt_time=0.095194434, completion_time=0.655071677, total_time=0.750266111)
+Response:
+content - Finance Minister cites ease of liquidity and availability driving FII exits.  
+- FIIs have net sold ₹4.9 trillion since April 2024.  
+- Retail inflows absorb FII sales, preventing market crash.  
+- Promoters also sell, reducing ownership and encouraging FII exits.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=607, prompt_tokens=1515, total_tokens=2122, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=537, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.348384853, prompt_time=0.09247316, completion_time=0.638685568, total_time=0.731158728)
+For temp: 0.7- {'temp': 0.7, 'completion_tokens': 726, 'reasoning_tokens': 651}
+For temp: 0- {'temp': 0, 'completion_tokens': 601, 'reasoning_tokens': 547}
+For temp: 1.5- {'temp': 1.5, 'completion_tokens': 607, 'reasoning_tokens': 537}

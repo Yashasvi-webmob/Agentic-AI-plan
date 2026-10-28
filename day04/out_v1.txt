@@ -1,0 +1,34 @@
+Response - content 
+- FIIs sell because liquidity is easy, exit routes available.  
+- Retail inflows absorb FII sales, keeping the market stable.  
+- Promoter selling signals undervaluation, adding to FII outflows.  
+- Large‑cap ownership fell to 21.1%, reflecting FII exit trend.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=712, prompt_tokens=1162, total_tokens=1874, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=639, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.659453866, prompt_time=0.081677456, completion_time=0.966518714, total_time=1.04819617)
+
+Response - content 
+- Liquidity abundant, making exits easy for FIIs.  
+- Retail inflows absorb selling, preventing market crash.  
+- Large‑cap ownership hit 14‑year low, prompting FII exit.  
+- Market still stable due to strong domestic demand.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=468, prompt_tokens=1162, total_tokens=1630, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=406, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.38292991, prompt_time=0.077477783, completion_time=0.518600388, total_time=0.596078171)
+
+
+Response - content **Summary**
+
+Indian Finance Minister Nirmala Sitharaman explained that FIIs have sold ₹4.9 trn ($53 bn) of shares since April 2024 because liquidity is very easy, allowing them to exit quickly. Despite these massive net sales, retail inflows into equity mutual funds and institutional retail vehicles have absorbed the selling, preventing a market crash.
+
+**Reasons for FII sell‑off**
+
+- Ease of liquidity and availability eases FII exits.  
+- Market absorbs sales via strong retail inflows.  
+- Retail and pension schemes keep buying despite FII net selling.  
+- FIIs not desperate; exit not crashing due to retail absorption.
+
+
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=1010, prompt_tokens=1162, total_tokens=2172, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=862, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.403614517, prompt_time=0.068399106, completion_time=1.109611463, total_time=1.178010569)
+For temp: 0.7- {'temp': 0.7, 'completion_tokens': 712, 'reasoning_tokens': 639}
+For temp: 0- {'temp': 0, 'completion_tokens': 468, 'reasoning_tokens': 406}
+For temp: 1.5- {'temp': 1.5, 'completion_tokens': 1010, 'reasoning_tokens': 862}

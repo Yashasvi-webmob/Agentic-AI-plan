@@ -4,6 +4,80 @@ Things I actually found out while building, in plain words. Newest day first.
 
 ---
 
+## Day 4: prompt best scenarios and working
+Setting reference of large text in a small prompt type template.
+
+If the question does not have a proper reference from the text the model was asked to reference, it fills the gap, not necessarily accurately instead of saying that this question can't be answered based on reference text. This needs explicit direction.
+
+The 1.5 temp run is the only one which gave a summary response, along with the 4 bullets, rest temp=0 and temp=0.7 scenario resulted in 4 bullets, with no summary.
+
+### The three runs (v1 prompt, same article, one run each)
+
+| Temp | Format (asked for exactly 4 bullets, 15 words max each) | Completion tokens | Reasoning tokens | Reasoning share |
+|---|---|---|---|---|
+| 0 | 4 bullets, all short | 468 | 406 | 87% |
+| 0.7 | 4 bullets, all short | 712 | 639 | 90% |
+| 1.5 | 4 bullets **plus** a bold heading and a 2-sentence paragraph | 1010 | 862 | 85% |
+
+Every call used 1162 prompt tokens (the article is most of that) and ended with `finish_reason: stop`. The three calls together used about 5,700 tokens, so they fit under the 8,000 per minute limit.
+
+- **85-90% of the output is hidden reasoning.** The visible answer is only about 60-150 tokens. I pay for the thinking, and I never see it.
+- **Reasoning tokens went up with temperature (406, 639, 862),** but this is one run each. On Day 1 the count also moved around at temperature 0, so I can't call it a rule yet. To check: run each temperature 2-3 times.
+- **High temperature broke the format rule.** "Answer in exactly 4 bullet points" did not stop the model adding a heading and a paragraph at 1.5. An instruction is a request, not a guarantee, and it holds less well the more random the sampling is.
+
+### Mistakes the format check can't catch
+The bullet count was fine at temp 0 and 0.7, but the meaning was wrong in places:
+- **Meaning flipped (temp 0.7):** "Promoter selling signals undervaluation". The article says the opposite: promoters sell because they think the market is paying too much for their companies.
+- **Cause and effect reversed (temp 0):** "Large-cap ownership hit 14-year low, prompting FII exit". In the article the low ownership is the result of the FIIs selling, not the reason for it.
+- **The question and the article don't match (all three temps):** the article explains how the market absorbed the selling, and says the Finance Minister's remark doesn't explain why FIIs sell. All three answers still gave "easy liquidity" as the reason FIIs sell.
+
+So temperature changed the style and the cost, but it did not cause or fix these errors. The prompt did. Checking the format is easy (count the bullets). Checking the facts means reading the article.
+
+### Prompt-writing lessons so far
+- Counting bullets is not the same as checking the answer. A summary can look perfect and be wrong.
+- If the question presumes something the text doesn't say, the model fills the gap. It needs an explicit way out: "if the article doesn't say, answer that it doesn't".
+- A format rule needs to say what **not** to add, e.g. "output only the 4 bullets, no heading, no extra text".
+- Print labels matter: my `Response - content` label put a dash right next to the first bullet's dash, and I miscounted the bullets at first.
+
+### v1 vs v2 (same article; v1 ran once per temperature, v2 ran three times; each run goes 0.7, 0, 1.5)
+
+What changed in v2:
+- System prompt got an exit: "if a question can't be answered from the context, say so".
+- User prompt got "only the bullets, no heading, no tags", "use only facts from the article", and one worked example (made-up article, question, 4 bullets). The example includes a cause-and-effect sentence (effect written first) and a bullet that reads it in the right order, plus one "article doesn't mention this" bullet.
+
+v2 token counts, three runs (completion / reasoning). v1 is one run.
+
+| Temp | v1 | v2 run 1 | v2 run 2 | v2 run 3 |
+|---|---|---|---|---|
+| 0 | 468 / 406 | 601 / 547 | 604 / 550 | 604 / 550 |
+| 0.7 | 712 / 639 | 726 / 651 | 496 / 438 | 653 / 590 |
+| 1.5 | 1010 / 862 | 607 / 537 | 579 / 499 | 534 / 440 |
+
+What the 9 v2 samples showed (3 per temperature):
+
+| Check | 0.7 | 0 | 1.5 |
+|---|---|---|---|
+| Exactly 4 bullets, no extra text, 15 words or fewer | 3/3 | 3/3 | 3/3 |
+| Cause and effect reversed | 2/3 | 0/3 | 0/3 |
+| "Article doesn't say" exit used | 0/3 | 0/3 | 0/3 |
+| Finance Minister's remark credited correctly | 0/3 | 0/3 | 1/3 |
+| Promoter role misread (sellers "enable/ease" absorption) | 2/3 | 0/3 | 0/3 |
+
+- **Cost of the example:** prompt tokens went from 1162 to 1515 (+353, about 30%), and that is paid on every call. Each run of three calls used about 6,200-6,500 tokens, close to the 8,000 per minute limit.
+- **Format: fixed, as far as I can tell.** 9 of 9 gave exactly 4 bullets with no heading, paragraph or tags, including 3 of 3 at 1.5, where v1 broke. v1 only ran once per temperature, so I can say it holds reliably on this article, not what the real failure rate is.
+- **Temperature 0 repeats the same answer, not a correct one.** All three runs gave the same visible bullets, and the reasoning tokens barely moved (547, 550, 550). So its weak points repeat every time: the minister's quote stated as fact, and "retail participation fuels FII exits" where the article says retail inflows allowed the selling. A stable answer can be consistently wrong.
+- **Reasoning no longer rises with temperature.** Ranges in v2: 0 gave 547-550, 0.7 gave 438-651, 1.5 gave 440-537 (averages about 550, 560, 492). So v1's rising pattern (406, 639, 862) was one sample, not a rule. What temperature seems to change is the spread: temperature 0 is steady and 0.7 jumps around. Reasoning is 82-91% of the output.
+- **Cause and effect: not fixed.** At 0.7 it came back in 2 of 3 runs ("ownership fell to a 14-year low, prompting FII divestments" and "...encouraging divestment"), even though the example showed the right order. It only appeared when the model joined two facts with a verb like "prompting". When the bullet just stated the fact ("hit a 14-year low"), there was no reversal. That is a guess from 3 samples, not proof.
+- **The "article doesn't say" exit: never used (0 of 9).** The article opens with the Finance Minister's quote as the explanation and ends by saying it explains nothing, so the gap is not obvious. The exit worked in my example because the gap there was obvious.
+- **Attribution goes wrong in a pattern.** Only 1 of 9 answers credits the Finance Minister. Four said "FIIs cite..." (wrong speaker) and four stated the remark as plain fact. The 15-word limit probably squeezes out "Finance Minister".
+- **The undervaluation flip is gone, but by absence.** No run clearly says why promoters sell, so nothing was fixed, the bullets just went elsewhere.
+- **New errors v1 did not have:** "Promoter sales enable/ease market absorption" (promoters are sellers, retail buyers absorb), "Promoters... encouraging FII exits" (the article never says this), and "NRI inflows" (the article never mentions NRIs).
+- **Lesson:** a prompt controlled the shape of the answer reliably, and the facts only partly. Shorter bullets forced compression, and compression brought new mistakes. Only reading the article catches these. 9 samples cannot give failure rates, and real confidence needs dozens of runs with automatic scoring. That is the reason evals exist (Week 8).
+
+Still to check:
+- [x] Run v2 two more times: format held at 1.5 (3 of 3), the reversal came back at 0.7, the exit never appeared
+- [ ] Optional: run v1 two or three more times at 1.5, so the v1 vs v2 format comparison is fair
+
 ## Day 3: asyncio, a concurrency limit, and Groq's rate limit
 
 What I built: 10 LLM calls, run three ways (one at a time, 3 at once, 10 at once), timed each.

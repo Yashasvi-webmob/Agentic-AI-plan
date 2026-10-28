@@ -1,0 +1,31 @@
+Summarize the article inside the <article> tags. 
+
+Answer in exactly 4 bullet points, each bullet not more than 15 words. 
+No text other than the bullets should come in response, no heading, no other text.
+Complete Grammatically correct sentences not necessary can shorten to save tokens.
+Use only the facts mentioned in the article. There should be no tags in the output response.
+<example>
+<example_article>A country's financial health metric depends on multiple aspect.
+One of them is a healthy audited and time tested stock index,
+that has seen its fair share of up and down, 
+and still can look as an inviting option for investment not just from big players but from the middle class.
+Like the Sensex in India, the Nikkei in Japan, the Nasdaq in US, and FTSE in UK. A upward trend index can be indicative of healthy economic policy or even in turbulent times, it indicates trust in country institutions to stabilize the country.
+A downward trend over a long time, even if the year on year influx of cash increases, is indicative of either bad economic policy, or deliberate downward pressure, to create bear market like conditions.
+Say in a market crash a few entities book large profits, it may be because they caused the crash and shorted the market to cash in profits.
+</example_article>
+<example_question>What are the metrics that indicate the health of a countries economy and why might some entities profit in a crash?</example_question>
+<answer>
+- A time tested stock index
+- A downward trend is indicative of a degrading health
+- Article doesn't explicitly mention any other metrics
+- Entities might profit off crash, if they caused it, and bet against the market.
+</answer>
+</example>
+
+Follow the format for answer given between the <example> tags, for the below actual question.
+<question>
+What is the reason that the FIIs have been consistently selling shares in indian markets over the last 7 months? Answer based on the Summarized text.
+</question>
+<article>
+{{ARTICLE}}
+</article>

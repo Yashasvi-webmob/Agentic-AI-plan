@@ -1,0 +1,24 @@
+Response:
+- FIIs cite ease of liquidity and availability as exit rationale.  
+- Retail inflows absorb selling, keeping prices stable.  
+- Nifty 50 ownership fell to 21.1%, encouraging divestment.  
+- Promoter sales further ease market absorption.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=653, prompt_tokens=1515, total_tokens=2168, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=590, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.34436376, prompt_time=0.101450041, completion_time=0.682009949, total_time=0.78345999)
+Response:
+- FIIs selling due to ease of liquidity and availability.  
+- Retail inflows absorb selling, preventing market crash.  
+- Promoters also sell, reducing ownership.  
+- High retail participation fuels continued FII exits.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=604, prompt_tokens=1515, total_tokens=2119, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=550, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.345218026, prompt_time=0.082501368, completion_time=0.65941029, total_time=0.741911658)
+Response:
+- FIIs sold ₹4.9 trillion since April 2024 due to easy liquidity and availability.  
+- Retail and fund inflows exceed FII sales, sustaining Nifty, keeping market from crashing.  
+- Nifty 50 ownership by FIIs fell to a 14‑year low of 21.1 %.  
+- Promoters also sold, and high IPO valuations used surplus retail capital.
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=534, prompt_tokens=1515, total_tokens=2049, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=440, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.318264019, prompt_time=0.089197031, completion_time=0.557289168, total_time=0.646486199)
+For temp: 0.7- {'temp': 0.7, 'completion_tokens': 653, 'reasoning_tokens': 590}
+For temp: 0- {'temp': 0, 'completion_tokens': 604, 'reasoning_tokens': 550}
+For temp: 1.5- {'temp': 1.5, 'completion_tokens': 534, 'reasoning_tokens': 440}
