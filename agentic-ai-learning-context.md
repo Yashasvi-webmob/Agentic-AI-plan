@@ -70,7 +70,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 
 | Decision | Value |
 | --- | --- |
-| Start date | Monday, September 28, 2026; week dates reset on October 21, 2026 after Day 1 (Week 1 runs Oct 21 – Nov 1, Week 12 ends Jan 17, 2027; Weeks 9–10 cross the year-end holidays) |
+| Start date | Monday, September 28, 2026; week dates reset on October 21, 2026 after Day 1, and again on November 17, 2026 after Day 5 (Week 1 runs Oct 21 – Nov 22, Week 12 ends Feb 7, 2027; Weeks 6–7 cross the year-end holidays) |
 | Length | 12 weeks: 60 weekday learning days plus weekend sessions |
 | Weekday time | About 1 hour: finish the concept, start the task |
 | Weekend time | One longer session, 3–4 hours, for builds, review, and catch-up |
@@ -88,7 +88,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 
 ### Month 1: LLM APIs, tools, basic RAG
 
-**Week 1 (Oct 21 – Nov 1): Python on-ramp and first API calls**
+**Week 1 (Oct 21 – Nov 22): Python on-ramp and first API calls**
 - Day 1: Tokens, context window, messages/roles, system prompt, temperature/top-p. Task: uv setup; same call via curl, raw httpx, SDK.
 - Day 2: Python for Node devs (lists, dicts, comprehensions, f-strings, modules, type hints, pyproject). Task: port a small Node utility.
 - Day 3: asyncio vs the Node event loop (await, gather, semaphores). Task: 10 concurrent calls, limit 3, timed.
@@ -96,7 +96,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 5: Multi-turn chat, statelessness, token counting, truncation. Task: CLI chat with history trimmed to a token budget.
 - Weekend: Chat CLI v1 with config and per-call token/cost logging; 1 page of notes.
 
-**Week 2 (Nov 2 – 8): Streaming and structured outputs**
+**Week 2 (Nov 23 – 29): Streaming and structured outputs**
 - Day 6: SSE, event types, deltas, time-to-first-token. Task: parse SSE by hand, then with the SDK.
 - Day 7: Streaming through a server, backpressure, disconnects. Task: Node proxy that aborts upstream when the client leaves.
 - Day 8: JSON mode, schema-constrained output, why JSON breaks. Task: extract fields from 20 messy texts; count failures.
@@ -104,7 +104,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 10: 429s, overload, timeouts, backoff with jitter, idempotency. Task: resilient client wrapper with simulated failures.
 - Weekend: Structured extractor service in FastAPI.
 
-**Week 3 (Nov 9 – 15): Tool calling**
+**Week 3 (Nov 30 – Dec 6): Tool calling**
 - Day 11: Tool schemas; model requests, code executes, results returned. Task: one calculator tool, full round trip, raw API.
 - Day 12: The agent loop with a max-iteration cap. Task: loop with calculator, read file, HTTP GET.
 - Day 13: Tool design (names, descriptions, schemas, actionable errors, parallel calls). Task: bad vs good descriptions on 10 prompts.
@@ -112,7 +112,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 15: Streaming plus tools; cost accounting per loop. Task: live stream with per-run cost summary.
 - Weekend: Mini ops assistant with tools over SQLite and Redis.
 
-**Week 4 (Nov 16 – 22): Basic RAG**
+**Week 4 (Dec 7 – 13): Basic RAG**
 - Day 16: Embeddings, cosine similarity, dimensions. Task: embed 50 sentences; numpy nearest-neighbor search.
 - Day 17: Chunking (size, overlap, structure-aware, metadata). Task: ingest a markdown docs set.
 - Day 18: Vector stores (pgvector, Chroma, Redis), HNSW concept. Task: store and query top-k.
@@ -122,7 +122,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 
 ### Month 2: Agent patterns, memory, observability, evals
 
-**Week 5 (Nov 23 – 29): Agent patterns**
+**Week 5 (Dec 14 – 20): Agent patterns**
 - Day 21: Workflows vs agents; the core patterns ("Building effective agents"). Task: notes mapping each to a backend analogy.
 - Day 22: Prompt chaining and routing. Task: classifier-router to specialized prompts.
 - Day 23: Parallelization and orchestrator-workers. Task: split, run concurrently, merge.
@@ -130,7 +130,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 25: ReAct, plan-and-execute, failure modes. Task: ReAct agent with scratchpad and loop detection.
 - Weekend: Rebuild one agent in LangGraph and one agent SDK; compare to from-scratch.
 
-**Week 6 (Nov 30 – Dec 6): Memory and state**
+**Week 6 (Dec 21 – 27): Memory and state**
 - Day 26: Memory types (context, scratchpad, episodic, semantic, summaries). Task: notes and sketch.
 - Day 27: Sliding windows, rolling summaries, compaction. Task: rolling summarization in the chat agent.
 - Day 28: Long-term memory, write policies, embedding retrieval. Task: memory store in Redis/pgvector via tools.
@@ -138,7 +138,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 30: Session isolation, contextvars, locking. Task: FastAPI agent with per-session state and request ids.
 - Weekend: Stateful research assistant with memory and crash recovery.
 
-**Week 7 (Dec 7 – 13): Observability**
+**Week 7 (Dec 28 – Jan 3): Observability**
 - Day 31: Nested spans for LLM and tool calls; OpenTelemetry GenAI conventions. Task: notes mapped to request-id propagation.
 - Day 32: Manual instrumentation (model, tokens, latency, cost). Task: OpenTelemetry + Jaeger.
 - Day 33: Langfuse, LangSmith, Arize Phoenix. Task: self-host Langfuse; send traces.
@@ -146,7 +146,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 35: Tokens/request, cost/task, tool error rate, p50/p95, TTFT. Task: dashboard.
 - Weekend: Write-up, "Tracing agents, explained for backend engineers."
 
-**Week 8 (Dec 14 – 20): Evals**
+**Week 8 (Jan 4 – 10): Evals**
 - Day 36: Golden datasets, offline vs online. Task: 30-case eval set.
 - Day 37: Programmatic graders, LLM-as-judge, pairwise, judge bias. Task: one of each grader.
 - Day 38: Task success, tool-use correctness, steps, cost. Task: trajectory-scoring harness.
@@ -156,7 +156,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 
 ### Month 3: Production concerns, MCP, polished project
 
-**Week 9 (Dec 21 – 27): Cost, latency, caching**
+**Week 9 (Jan 11 – 17): Cost, latency, caching**
 - Day 41: Token costs, model tiers, routing. Task: cost report; route easy requests to a small model.
 - Day 42: TTFT vs total latency, parallel tools. Task: per-span latency breakdown; cut p95.
 - Day 43: Provider prompt caching. Task: enable and measure.
@@ -164,7 +164,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 45: Batch APIs, queues, rate limiting. Task: queue-backed workers (BullMQ or Celery).
 - Weekend: Scope the project; start the parallel track.
 
-**Week 10 (Dec 28 – Jan 3): Guardrails and security**
+**Week 10 (Jan 18 – 24): Guardrails and security**
 - Day 46: Prompt injection, exfiltration, tool misuse, OWASP Top 10 for LLM apps. Task: attack own RAG with poisoned docs.
 - Day 47: Input/output guardrails. Task: add checks to the agent.
 - Day 48: Least privilege, human-in-the-loop, sandboxing. Task: Docker-sandboxed code tool.
@@ -172,7 +172,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 50: Red-teaming as evals, PII in logs. Task: add injection and PII cases to evals.
 - Weekend: Project core loop and RAG.
 
-**Week 11 (Jan 4 – 10): MCP**
+**Week 11 (Jan 25 – 31): MCP**
 - Day 51: Hosts, clients, servers; tools, resources, prompts; stdio vs streamable HTTP. Task: connect an existing server to Claude Desktop/Code.
 - Day 52: Build an MCP server. Task: 2 backend tools; test with MCP Inspector.
 - Day 53: MCP client side. Task: own agent uses own server.
@@ -180,7 +180,7 @@ The genuinely new mental shift: outputs vary run to run, so testing becomes **ev
 - Day 55: Agent SDKs, computer use, agent-to-agent protocols. Task: wire MCP into the project.
 - Weekend: Project evals and tracing.
 
-**Week 12 (Jan 11 – 17): Polish and ship**
+**Week 12 (Feb 1 – 7): Polish and ship**
 - Day 56: Architecture diagram and README.
 - Day 57: Evals in CI with a pass threshold.
 - Day 58: Observability dashboard and cost-per-task report.

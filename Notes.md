@@ -3,6 +3,80 @@
 Things I actually found out while building, in plain words. Newest day first.
 
 ---
+## Day 5 : Multi Turn Chat, Statelessness and model memory
+    Model has no memory of its own, picks from whatever chat you pass to it. If i ask what is my name , and in the same prompt i haven't given my name anywhere, it won;t be able to go back to previous chats and pick that name, even if it was present there.
+    Takes less token for refusal/forgot case.
+
+### What I built
+A chat CLI (`day05/main.py`). It keeps the whole conversation in a list and sends the list on every call. Before each call it estimates the token count with `tiktoken`, and if the list is over a token budget it drops the oldest question-and-answer pairs.
+
+### Test 1: with history vs without
+
+| | Full history | Only the system prompt and the last question |
+|---|---|---|
+| "What club am I a fan of?" | "You're a Barcelona fan." | "I'm sorry, but I can't help with that." |
+| Prompt tokens | 272 | 157 |
+
+- Same system prompt and same question. Only the history differed, so the history I send is the only place the model learns anything about me.
+- The answer without history was a refusal, not "I don't know", because my system prompt says to answer football-coach questions only. A refusal and a "forgot" look the same, so I should say "couldn't answer".
+- The history cost 115 tokens, and it is resent on every turn.
+
+### A bug I found: the reply was added to the history twice
+- My first 7-turn chat had `prompt_tokens` of 124, 344, 485, 821, 897, 1048, 1217. Each turn rose by about **double** what the new question and the last reply were worth (e.g. +220 when a plain count said about 100).
+- Cause: two lines both appended the assistant reply, so every reply was in the history twice.
+- After deleting one, the same kind of chat gave 131, 163, 187, 262, 301, 354, 401. Each rise is now about one reply plus one question plus roughly 10 tokens.
+- So the first run's totals (4,936 input tokens against 1,081 output) were inflated by the bug. Lesson: when a token count looks too big, check what is really in the list.
+
+### The token estimate: how wrong it was and how I fixed it
+With `tiktoken` (`o200k_base`) and 4 tokens per message, my estimate was always too low:
+
+| Turn | My estimate | Real prompt tokens | Gap |
+|---|---|---|---|
+| 1 | 65 | 131 | -66 |
+| 2 | 95 | 163 | -68 |
+| 3 | 117 | 187 | -70 |
+| 4 | 190 | 262 | -72 |
+| 5 | 227 | 301 | -74 |
+| 6 | 278 | 354 | -76 |
+| 7 | 323 | 401 | -78 |
+
+- The gap was exactly `64 + number of messages`. So there is a **fixed 64 tokens** that the provider adds to every request (a hidden header), and the real cost per message is **5, not 4**.
+- With `64 + 5 per message` the gap is **0** on every turn I checked: 127/127, 159/159, 183/183, and 133/133 after trimming.
+- The 64 belongs to this provider and model. If I change either, I have to measure it again.
+- Counting only the new question (what I tried first) tells me nothing. What matters is the whole list that is sent.
+
+### Test 2: trimming to a budget, and forgetting
+Budget: 300 tokens (the estimate includes the 64). The chat went: my name, "what's your name", "what's your career" (the model answered with a big table), then a question about Arsenal and Barcelona.
+
+- Before that fourth question the code printed `Messages Deleted: 6`, and `prompt_tokens` went **down** from 183 to 133. Only the system prompt and my new question were left.
+- Why all 6 and not just the oldest pair: the career table was about 270 tokens, almost the whole budget on its own. After the two name pairs were gone the list was still over budget, so the table's pair was removed too.
+- Then "what is my name?" got "I don't have that information." That is forgetting working: the model knew my name while that pair was in the list.
+- The Arsenal and Barcelona question got a confident "No, I didn't coach the same player at both", although the table that mentioned those clubs had just been deleted. It had no basis for the answer and invented one. For a fact about me it declined, for a fact about its made-up career it made something up.
+- The system prompt survived the trim, and the persona stayed.
+
+### What I learned
+- The model has no memory. Whatever it "remembers" is the list I resend, and it costs tokens on every turn.
+- Trimming by age keeps the size down, but it ignores importance. The oldest pair went first (my name), but so did the long answer the next question depended on.
+- One long message can push out everything older. With a 300 budget, a single table cleared the whole history. Real budgets are bigger, but the effect is the same.
+- The model builds on its own earlier statements, true or not. It invented a career, then agreed with my wrong claim about Conte and contradicted itself ("I stepped in after him"). Same pattern as Day 4: it fills gaps and goes along with the user.
+- A failed reply (`finish_reason: length`) must not enter the history. I remove my question again so the list keeps alternating user and assistant.
+
+### Decisions I made
+- If one message alone is bigger than the whole budget, the trim stops at the system prompt plus that message and sends it anyway, with no warning.
+- If a reply fails, my question is removed again, but pairs the trim already dropped for that turn stay dropped.
+
+### Python things that bit me
+- `json.load(f)` parses an open file. `json.loads(s)` parses a string. And `f["messages"]` on the file object does nothing, I have to parse first.
+- `except A or B` catches only `A`. For several exceptions, use a tuple: `except (A, B):`. A list in `[ ]` there crashes only when an exception happens.
+- `x is "exit"` compares identity. Use `==`. `input()` gives `""` for an empty line, never `None`, so test `if not value:`.
+- `enc.encode(...)` returns a **list** of token ids, so the count is `len(...)`. It takes a string, not a dict.
+- Braces, `&&` and `delete` are JS. In Python: a colon and indentation, `and`, and `del messages[1:3]` to remove items in place.
+- `tiktoken.get_encoding("o200k_base")` takes an encoding name. `encoding_for_model` only knows OpenAI's own model names.
+
+### Still to check
+- [ ] Which file did the no-history run use? `msgs_forget.json` has one Q&A in it, so the 115 tokens may be 6 messages (about 19 each) and not 8.
+- [ ] Does a `finish_reason: length` reply really leave the list clean? (Try `max_tokens` 50.)
+- [ ] Would trimming by size (drop the biggest old reply first) or a summary keep more? Week 6 covers summaries.
 
 ## Day 4: prompt best scenarios and working
 Setting reference of large text in a small prompt type template.

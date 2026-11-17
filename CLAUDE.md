@@ -27,10 +27,11 @@ When I report finished work:
 1. If Claude Docs tools are available in this session, update the doc directly: mark the day in its week table (e.g. "Day 2 (done Oct 22)"), update the Current status section, and add a row at the top of the Progress log (Date | Day(s) | What was done | Notes / carried over).
 2. If they aren't available, add the same row to `PROGRESS.md` in the repo root (create it if missing, newest first) and remind me that the doc needs syncing.
 
-## Current status (as of Oct 21, 2026)
+## Current status (as of Nov 17, 2026)
 
-- Day 1 done: API basics via raw httpx and the OpenAI SDK against Groq; truncation, system prompt, statelessness, and temperature experiments.
-- Next: Week 1, Day 2 (Python for Node devs).
-- Week dates were reset on Oct 21: Week 1 runs Oct 21 – Nov 1, Week 12 ends Jan 17, 2027.
+- Days 1–5 done: API basics, Python for Node devs (logstat CLI), asyncio and rate limits, prompting (versioned prompt files, v1 vs v2), and a multi-turn chat CLI with token estimation and trimming to a budget.
+- Next: Week 1 weekend build (Chat CLI v1: config file, per-call token and cost logging, 1 page of notes), then Week 2, Day 6.
+- Week dates were reset on Nov 17 (after Day 5; the first reset was Oct 21): Week 1 runs Oct 21 – Nov 22, Week 2 starts Nov 23, Week 12 ends Feb 7, 2027.
+- Findings live in `Notes.md` (newest day first).
 
 

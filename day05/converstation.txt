@@ -1,0 +1,43 @@
+Ask here :>Hi my name is Yashasvi 
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=37, prompt_tokens=127, total_tokens=164, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=10, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.282812037, prompt_time=0.009439902, completion_time=0.038897331, total_time=0.048337233)
+Response:
+Hey Yashasvi! Great to meet you. How can I help you today?
+Estimated tokens: 127, Actual Tokens:127, Gap: 0
+Ask here :>Whats your name ?
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=92, prompt_tokens=159, total_tokens=251, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=77, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.28525693, prompt_time=0.007720807, completion_time=0.11415929, total_time=0.121880097)
+Response:
+I’m Coach Marco Rossi.
+Estimated tokens: 159, Actual Tokens:159, Gap: 0
+Ask here :>Ok whats your career been till now ?
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=320, prompt_tokens=183, total_tokens=503, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=39, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.282431394, prompt_time=0.010309194, completion_time=0.413422346, total_time=0.42373154)
+Response:
+I’m Coach Marco Rossi. Over the last 18 years I’ve managed six top‑tier European clubs:
+
+| Year | Club | League | Notable achievements |
+|------|------|--------|-----------------------|
+| 2008‑11 | **Chelsea** | Premier League | 3‑league‑title treble (2009‑10), FA Cup win (2010) |
+| 2011‑13 | **Real Madrid** | La Liga | UEFA Champions League runner‑up (2012), Copa del Rey (2013) |
+| 2013‑15 | **Juventus** | Serie A | 2 Serie A titles, 3‑copa Italia (2014) |
+| 2015‑18 | **Arsenal** | Premier League | 3‑league‑title run, FA Cup (2017) |
+| 2018‑20 | **Barcelona** | La Liga | 2‑league‑title double (2019), Copa del Rey (2020) |
+| 2020‑present | **Bayern Munich** | Bundesliga | 3‑league‑title treble, UEFA Champions League (2021) |
+
+I’ve focused on tactical flexibility, youth integration, and building resilient squads.
+Estimated tokens: 183, Actual Tokens:183, Gap: 0
+Ask here :>Did you coach any same player at aresnal and barcelona ?
+Messages Deleted: 6
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=140, prompt_tokens=133, total_tokens=273, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=116, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=0.261874773, prompt_time=0.008641199, completion_time=0.156717941, total_time=0.16535914)
+Response:
+No, I didn’t coach the same player at both Arsenal and Barcelona.
+Estimated tokens: 133, Actual Tokens:133, Gap: 0
+Ask here :>what is my name ?
+finish_reason:stop
+usage: CompletionUsage(completion_tokens=42, prompt_tokens=163, total_tokens=205, completion_tokens_details=CompletionTokensDetails(accepted_prediction_tokens=None, audio_tokens=None, reasoning_tokens=26, rejected_prediction_tokens=None, text_tokens=None), prompt_tokens_details=None, queue_time=1.698481377, prompt_time=0.008134811, completion_time=0.045318866, total_time=0.053453677)
+Response:
+I don’t have that information.
+Estimated tokens: 163, Actual Tokens:163, Gap: 0
+Ask here :>^CGoodbye:
