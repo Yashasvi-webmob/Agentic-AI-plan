@@ -1,0 +1,5 @@
+{"timestamp": 1795091257.6051228, "turn": 1, "finish_reason": "stop", "prompt_tokens": 134, "completion_tokens": 135, "reasoning_tokens": 91, "total_tokens": 269, "estimated_tokens": 134, "gap": 0}
+{"timestamp": 1795091274.9630756, "turn": 2, "finish_reason": "stop", "prompt_tokens": 188, "completion_tokens": 485, "reasoning_tokens": 52, "total_tokens": 673, "estimated_tokens": 188, "gap": 0}
+{"timestamp": 1795091435.5878808, "turn": 1, "finish_reason": "length", "prompt_tokens": 128, "completion_tokens": 50, "reasoning_tokens": 48, "total_tokens": 178, "estimated_tokens": 128, "gap": 0}
+{"timestamp": 1795091442.4855504, "turn": 2, "finish_reason": "length", "prompt_tokens": 128, "completion_tokens": 50, "reasoning_tokens": 48, "total_tokens": 178, "estimated_tokens": 128, "gap": 0}
+{"timestamp": 1795091448.7904909, "turn": 3, "finish_reason": "length", "prompt_tokens": 126, "completion_tokens": 50, "reasoning_tokens": 48, "total_tokens": 176, "estimated_tokens": 126, "gap": 0}

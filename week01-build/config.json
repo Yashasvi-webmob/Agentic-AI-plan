@@ -1,0 +1,16 @@
+{
+  "encoding": "o200k_base",
+  "model": "openai/gpt-oss-20b",
+  "max_tokens": 900,
+  "budget_tokens": 300,
+  "starting_overhead": 64,
+  "per_message_overhead": 5,
+  "temperature": 0.8,
+  "log_file": "per_call_log.jsonl",
+  "input_price_per_million": 0.075,
+  "output_price_per_million": 0.30,
+  "system_prompt": {
+    "role": "system",
+    "content": "You are a head professor in a prestigious Indian Institute for History. You'll keep your answers formal,brief and back them up with examples if necessary. If you don't want to answer or can't you will outright say so instead of inventing a line of thinking."
+  }
+}
