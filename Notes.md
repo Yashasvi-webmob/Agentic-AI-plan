@@ -3,6 +3,59 @@
 Things I actually found out while building, in plain words. Newest day first.
 
 ---
+## Week 1 summary: what changed how I think about LLM APIs
+
+Seven things from Days 1-5 and the weekend build, each with the day it came from.
+
+1. **The model is stateless.** It only knows what I send in this call. "Memory" is a list I resend every turn, so input tokens grow every turn, and anything I trim is gone for good. (Day 5; the weekend test: "what is my name?" got "I do not know" once the name's pair had been trimmed.)
+2. **Tokens are the unit of everything: cost, limits, trimming.** `gpt-oss-20b` thinks before it answers, and that hidden reasoning counts as output. It was 82-91% of the output in the Day 4 runs, and about 31% over the weekend chat (522 of 1,711). It also has a floor: with `max_tokens=50`, even "Hi" used 48 reasoning tokens and returned nothing. So `max_tokens` has to leave room for the thinking. (Days 3, 4, weekend)
+3. **Limits are per minute and counted in tokens.** The free tier gives 8,000 tokens a minute, and each call reserves its `max_tokens` up front, so a burst can be rejected even when the answers are short. The SDK quietly retries a 429 twice before it raises. A semaphore gives the same speed-up as a worker pool in Node, and I should repeat a timing before I believe it. (Day 3)
+4. **Instructions control format, not meaning.** A rules-plus-example prompt held a 4-bullet format 9 times out of 9, even at temperature 1.5. It did not stop the model inventing facts. Over the weekend, the prompt said "brief" and "don't invent": I got a 762-token table, three different invented professor names in three sessions, and a confident list of invented sources when I asked what it had cited. Temperature 0 gives the same answer each time, not a correct one. (Day 4, weekend)
+5. **Count tokens before sending, and calibrate against the real number.** `tiktoken` alone was off by 64 plus a bit per message. The real rule here is a fixed 64 hidden tokens plus 5 per message, which gave a gap of 0 on every call, including after a prompt change. The 64 belongs to this provider and model. (Day 5, weekend)
+6. **Log every call as one structured line.** One JSON line per call (tokens, reasoning, estimate, gap, latency, cost, messages dropped) answered everything I asked afterwards. The session summary matched the sum of the log lines exactly. Failed calls (`length`, API errors) need a line too, because they cost tokens. The latency I measure on my side (about 0.87 s) is far above the server's own `total_time` (about 0.1 s), so I log the client-side one. (Weekend)
+7. **Python habits from Node.** A missing dict key raises `KeyError`, empty things are falsy, `try` should wrap one line and name its exception, errors exit non-zero, and each file does one job. (Day 2, repeated in every build since)
+
+Carried into Week 2 and later: trimming by age drops important things (summaries are Week 6), and one sample can't give a failure rate (evals are Week 8).
+
+---
+## Weekend build: Chat CLI v1 (`week01-build/`)
+
+### What I built
+Day 5's chat CLI turned into a small tool that reads its settings from a file and writes a log line for every call.
+- `config.json`: model, encoding, `max_tokens`, temperature, token budget, the 64 and 5 numbers, the system prompt, the two prices per million tokens, the log file name. Changing behaviour means editing this file, not code.
+- `main.py`: the chat loop, token estimate, trimming, one model call, one log line per call, and a session summary when I quit.
+- `per_call_log.jsonl`: one JSON line per call. Fields: `session_id`, `timestamp`, `turn`, `finish_reason`, `prompt_tokens`, `completion_tokens`, `reasoning_tokens`, `total_tokens`, `estimated_tokens`, `gap`, `latency`, `tokens_cost`, `messages_deleted`. A failed API call gets a smaller line with `finish_reason: "error"`.
+- The cost is a "would have cost" figure (the free tier charges nothing): prompt tokens times the input price plus completion tokens times the output price, per million. Reasoning tokens are inside `completion_tokens`, so they are billed as output. The prices in the config came from a search, because Groq's page no longer shows any, so treat the cost as an estimate.
+
+### The 7-turn test
+| | Summary printed at exit | Sum of the log lines |
+|---|---|---|
+| Calls | 7 (failed: 0) | 7 |
+| Input tokens | 1,289 | 1,289 |
+| Output tokens (reasoning) | 1,711 (522) | 1,711 (522) |
+| Cost | $0.000610 | $0.00060997 |
+| Gap | 0 on every turn | 0 |
+
+- Trimming showed up in `messages_deleted`: 2 on turn 5, 8 on turn 6, 2 on turn 7. Turn 5's answer was about 340 visible tokens, so on turn 6 the loop deleted pairs until only the system prompt and the new question were left (prompt tokens 271 -> 138). Turn 6's answer was about 690 tokens, more than twice the budget, and cleared the history again.
+- Same as Day 5: the budget of 300 is tiny next to a long answer, so one long reply wipes the history.
+- `max_tokens=50` test: three calls in a row ended with `finish_reason: length` and an empty reply. All three were logged, and each was removed from the history, so the prompt stayed at 128/128/126 tokens. The Day 5 guard works.
+
+### Bugs I hit on the way
+- `open(path)` is read mode, so `write` fails. A log file needs `"a"`. And the newline is `"\n"`, not `"/n"`.
+- `usage.reasoning_tokens` doesn't exist. It is `usage.completion_tokens_details.reasoning_tokens`, and can be `None`.
+- `total_tokens` added the reasoning tokens a second time. They are already inside `completion_tokens`.
+- The log call sat after the `length` check, so cut-off replies never got logged. Log first, then check.
+- `session_id` was built inside the loop from `time.time() + "_" + turn` (a float plus a string, so a `TypeError`), and would have changed every line. It has to be made once, before the loop.
+- On an API error I had `return`, which ends the program, and a print with the wrong message. After a failure, `continue` is right, and I must not touch the old `result` (it would silently log the previous call twice).
+- The first version started the history as an empty list, so the system prompt was never sent.
+
+### Still to check
+- [ ] Is the price I used correct? Groq's own page shows none, so I should find a source and write down where it came from.
+- [ ] Trigger a real 429 (burst of calls inside one minute) and watch the failed-call line and the `failed` count.
+- [ ] Keep the full history and send only a trimmed copy, so a failed call doesn't lose the pairs the trim already dropped.
+- [ ] Move the config load into a function with a clear error for a missing file, bad JSON or a missing key.
+
+---
 ## Day 5 : Multi Turn Chat, Statelessness and model memory
     Model has no memory of its own, picks from whatever chat you pass to it. If i ask what is my name , and in the same prompt i haven't given my name anywhere, it won;t be able to go back to previous chats and pick that name, even if it was present there.
     Takes less token for refusal/forgot case.

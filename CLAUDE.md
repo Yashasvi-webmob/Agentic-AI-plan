@@ -27,11 +27,12 @@ When I report finished work:
 1. If Claude Docs tools are available in this session, update the doc directly: mark the day in its week table (e.g. "Day 2 (done Oct 22)"), update the Current status section, and add a row at the top of the Progress log (Date | Day(s) | What was done | Notes / carried over).
 2. If they aren't available, add the same row to `PROGRESS.md` in the repo root (create it if missing, newest first) and remind me that the doc needs syncing.
 
-## Current status (as of Nov 17, 2026)
+## Current status (as of Nov 23, 2026)
 
-- Days 1–5 done: API basics, Python for Node devs (logstat CLI), asyncio and rate limits, prompting (versioned prompt files, v1 vs v2), and a multi-turn chat CLI with token estimation and trimming to a budget.
-- Next: Week 1 weekend build (Chat CLI v1: config file, per-call token and cost logging, 1 page of notes), then Week 2, Day 6.
-- Week dates were reset on Nov 17 (after Day 5; the first reset was Oct 21): Week 1 runs Oct 21 – Nov 22, Week 2 starts Nov 23, Week 12 ends Feb 7, 2027.
-- Findings live in `Notes.md` (newest day first).
+- Days 1–5 and the Week 1 weekend build done: API basics, Python for Node devs (logstat CLI), asyncio and rate limits, prompting (versioned prompt files, v1 vs v2), a multi-turn chat CLI with token estimation and trimming to a budget, and Chat CLI v1 in `week01-build/` (config file, one JSONL log line per call with tokens, latency and would-be cost, a session summary, `logstat.py`, README).
+- Next: Week 2, Day 6 (SSE, event types, deltas, time-to-first-token; parse SSE by hand, then with the SDK).
+- Week dates were reset on Nov 17 (after Day 5; the first reset was Oct 21): Week 1 ran Oct 21 – Nov 22, Week 2 starts Nov 23, Week 12 ends Feb 7, 2027.
+- Findings live in `Notes.md` (newest first; a Week 1 summary page is at the top).
+- Open (optional): Day 3 cold-start check, Day 4 v1 rerun at 1.5, a real 429 test of the failed-call path in `week01-build`, a source for the prices in its `config.json`.
 
 

@@ -1,20 +1,49 @@
 import os
-from openai import OpenAI
+from openai import OpenAI, APIError
 from dotenv import load_dotenv
 import json
 import tiktoken
 import pathlib
 import time
+import sys
 
 config_path = pathlib.Path(__file__).parent / "config.json"
 
-with open(config_path, encoding="utf8") as f:
-    config = json.load(f)
+REQUIRED_KEYS = {
+    "encoding",
+    "model",
+    "max_tokens",
+    "budget_tokens",
+    "starting_overhead",
+    "per_message_overhead",
+    "temperature",
+    "log_file",
+    "input_price_per_million",
+    "output_price_per_million",
+    "system_prompt",
+}
+
+def load_config(path):
+    try:
+        with open(path, encoding="utf8") as f:
+            cfg = json.load(f)
+    except FileNotFoundError:
+        sys.exit(f"Config file not found: {path}")
+    except json.JSONDecodeError as e:
+        sys.exit(f"Config is not valid JSON: {e}")
+    missing = REQUIRED_KEYS - cfg.keys()
+    if missing:
+        sys.exit(f"Config is missing keys: {sorted(missing)}")
+    return cfg
+
+config = load_config(config_path)
 
 load_dotenv()
 STARTING_OVERHEAD = config["starting_overhead"]
 PER_MESSAGE_ADJUST_OVERHEAD = config["per_message_overhead"]
 BUDGET_TOKENS = config["budget_tokens"]
+
+
 
 
 def write_log(log: dict):
@@ -51,6 +80,13 @@ def estimate_message_tokens(enc, messages: []):
     return totalTokens
 
 
+def calc_tokens_cost(completion_tokens, prompt_tokens):
+    return (
+        prompt_tokens * config["input_price_per_million"]
+        + completion_tokens * config["output_price_per_million"]
+    ) / 1000000
+
+
 def trim_based_on_estimate(encoding, messages):
     messages_deleted = 0
     while True:
@@ -60,8 +96,9 @@ def trim_based_on_estimate(encoding, messages):
             messages_deleted = messages_deleted + 2
         else:
             break
-    if messages_deleted > 0:
-        print(f"Messages Deleted: {messages_deleted}")
+    # if messages_deleted > 0:
+    #     print(f"Messages Deleted: {messages_deleted}")
+    return messages_deleted
 
 
 def main():
@@ -72,6 +109,14 @@ def main():
     enc = tiktoken.get_encoding(config["encoding"])
     messages = [config["system_prompt"]]
     turn = 0
+    session_id = str(time.time())
+    calls = 0
+    failed_calls = 0
+    total_prompt = 0
+    total_completion = 0
+    total_reasoning = 0
+    total_cost = 0.0
+    total_gap = 0
     while True:
         try:
             input_text = input("Ask here :>")
@@ -84,16 +129,38 @@ def main():
         if not input_value:
             continue
         messages.append({"role": "user", "content": input_value})
-        trim_based_on_estimate(enc, messages)
+        messages_deleted = trim_based_on_estimate(enc, messages)
         estimated_tokens = estimate_message_tokens(enc, messages)
+        turn = turn + 1
         start = time.perf_counter()
-        result = call_model(client, config["temperature"], messages)
+        try:
+            result = call_model(client, config["temperature"], messages)
+        except APIError as e:
+            elapsed = time.perf_counter() - start
+            print(f"API call failed: {type(e).__name__}")
+            write_log(
+                {
+                    "session_id": session_id,
+                    "timestamp": time.time(),
+                    "turn": turn,
+                    "finish_reason": "error",
+                    "error": type(e).__name__,
+                    "latency": elapsed,
+                    "messages_deleted": messages_deleted,
+                }
+            )
+            failed_calls += 1
+            messages.pop()
+            continue
         elapsed = time.perf_counter() - start
 
         print(f"Latency For Model Call: {elapsed}")
-        turn = turn + 1
+        # turn = turn + 1
+        cost = calc_tokens_cost(
+            result["usage"].completion_tokens, result["usage"].prompt_tokens
+        )
         new_record = {
-            "session_id":time.time() + "_"+ turn,
+            "session_id": session_id,
             "timestamp": time.time(),
             "turn": turn,
             "finish_reason": result["finish_reason"],
@@ -107,10 +174,18 @@ def main():
             + result["usage"].completion_tokens,
             "estimated_tokens": estimated_tokens,
             "gap": estimated_tokens - result["usage"].prompt_tokens,
-            "latency":elapsed,
+            "latency": elapsed,
+            "tokens_cost": cost,
+            "messages_deleted": messages_deleted,
         }
         write_log(new_record)
 
+        calls += 1
+        total_prompt += new_record["prompt_tokens"]
+        total_completion += new_record["completion_tokens"]
+        total_reasoning += new_record["reasoning_tokens"]
+        total_cost += new_record["tokens_cost"]
+        total_gap += new_record["gap"]
         print(f"finish_reason:{result['finish_reason']}")
         print(f"usage: {result['usage']}")
         if result["finish_reason"] == "length" or not result["content"]:
@@ -124,6 +199,12 @@ def main():
         )
 
         messages.append({"role": "assistant", "content": result["content"]})
+    print("\n--- Session summary ---")
+    print(f"Calls: {calls} (failed: {failed_calls})")
+    print(f"Input tokens: {total_prompt}")
+    print(f"Output tokens: {total_completion} (reasoning: {total_reasoning})")
+    print(f"Estimated cost: ${total_cost:.6f}")
+    print(f"Average gap: {total_gap / calls if calls else 0}")
 
 
 if __name__ == "__main__":
